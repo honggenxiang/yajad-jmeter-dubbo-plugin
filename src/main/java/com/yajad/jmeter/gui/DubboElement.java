@@ -119,7 +119,8 @@ public class DubboElement implements Serializable {
             result = e;
             sampleResult.setSuccessful(true);
         }
-        sampleResult.setResponseData(JsonUtils.toJson(result), StandardCharsets.UTF_8.name());
+        String content = JsonUtils.toJson(result);
+        sampleResult.setResponseData(content, StandardCharsets.UTF_8.name());
     }
 
     private String getSampleData() {

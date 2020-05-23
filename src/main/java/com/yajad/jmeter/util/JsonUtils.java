@@ -5,17 +5,20 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 public class JsonUtils {
-	private static final Gson gson = new GsonBuilder()
+    private static final Gson gson = new GsonBuilder()
             .setDateFormat("yyyy-MM-dd HH:mm:ss")
+            .registerTypeAdapter(HashMap.class, new HashMapAdapter())
             .setPrettyPrinting().disableHtmlEscaping().serializeNulls()
             .create();
 
-	public static String toJson(Object obj) {
+    public static String toJson(Object obj) {
         return gson.toJson(obj);
-	}
+    }
 
     public static <T> T fromMap(Map<String, Object> map, Class<T> clazz) {
         try {
@@ -25,12 +28,12 @@ public class JsonUtils {
         return null;
     }
 
-	public static boolean validate(String jsonString) {
-		try {
-			new JsonParser().parse(jsonString);
-		} catch (JsonSyntaxException ignore) {
-			return false;
-		}
-		return true;
-	}
+    public static boolean validate(String jsonString) {
+        try {
+            new JsonParser().parse(jsonString);
+        } catch (JsonSyntaxException ignore) {
+            return false;
+        }
+        return true;
+    }
 }
